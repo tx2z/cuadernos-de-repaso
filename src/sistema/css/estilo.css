@@ -120,12 +120,12 @@ p{margin:.5em 0;}
 .item-about:hover{background:var(--azul3);}
 
 /* ====== Cabecera de sección ====== */
-.sec{margin:30px 0;position:relative;}
+.sec{margin:30px 0;position:relative;display:flow-root;}
 .sec-cab{display:inline-flex;align-items:center;gap:12px;background:var(--azul);border:3px solid var(--tinta);border-radius:14px;padding:7px 18px 7px 14px;transform:rotate(-.7deg);break-after:avoid;}
 .sec-cab .ico{font-size:26px;line-height:1;filter:saturate(1.1);}
 .sec-cab h2{color:var(--crema);font-size:23px;margin:0;}
-/* Doodle decorativo arriba a la derecha de la sección */
-.doodle{position:absolute;top:-10px;right:-2px;width:74px;height:auto;transform:rotate(8deg);pointer-events:none;z-index:2;}
+/* Doodle decorativo: flota a la derecha y el texto lo rodea (shape-outside), sin solaparse */
+.doodle{float:right;width:74px;height:auto;margin:0 -2px 6px 14px;transform:rotate(8deg);shape-outside:circle(48%);shape-margin:8px;pointer-events:none;}
 
 /* Etiquetas de nivel */
 .nivel{margin:16px 0;}

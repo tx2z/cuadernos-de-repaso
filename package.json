@@ -2,6 +2,7 @@
   "name": "cuadernos-de-repaso",
   "version": "1.0.0",
   "description": "Cuadernos de repaso escolar (monorepo) — sitio web (Eleventy)",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "start": "eleventy --serve",

@@ -77,6 +77,16 @@ carpeta de imágenes: `python3 docs/optimizar-imagenes.py docs/<unidad>/images`.
 - **Imprimir / PDF** desde el menú: A4, sin el chrome, sin cortes feos.
 - Email de contacto ofuscado (anti-bots): se ensambla en el cliente.
 
+## Licencia
+
+Licencia dual:
+
+- **Código** (plantillas, CSS, JS, configuración) → **MIT** (ver [`LICENSE`](LICENSE)). Uso libre,
+  incluido el comercial.
+- **Contenido** (textos, ejercicios, guías, imágenes) → **CC BY-NC 4.0**
+  (ver [`LICENSE-CONTENT.md`](LICENSE-CONTENT.md)). Compártelo y adáptalo libremente sin ánimo de
+  lucro, con atribución a *Jesús Pérez · cuadernos-de-repaso.com*. Para usos comerciales, pide permiso.
+
 ## Hecho con
 
 Contenido basado en el currículo LOMLOE (Ciclo 2) y en hechos históricos contrastados,

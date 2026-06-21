@@ -4,7 +4,9 @@
     <h3>Acerca de Cuadernos de Repaso</h3>
     <p>¡Hola! 👋 Soy un padre que ha creado estos cuadernos de repaso para sus hijos, y los
     comparto por si le sirven a alguien más.</p>
-    <p>El contenido es <b>abierto y gratuito</b>: úsalo, imprímelo y compártelo libremente.</p>
+    <p>El contenido es <b>abierto y gratuito</b>: úsalo, imprímelo y compártelo libremente. Es
+    además <b>código abierto</b> y puedes verlo todo en
+    <a href="{{ sitio.repo }}" target="_blank" rel="noopener">{{ sitio.repo | replace("https://", "") }}</a>.</p>
     <p>Los ejercicios <b>no son interactivos</b>: se necesita una <b>libreta y un lápiz o boli</b>
     para escribir las respuestas mientras se lee el contenido en pantalla (o impreso).</p>
     <p>Cada unidad incluye una <b>guía para padres</b> (con las soluciones y consejos para acompañar),
@@ -16,6 +18,9 @@
     <p>¿Te gustaría <b>ampliar el contenido</b> o tener ejercicios para otros cursos o temáticas?
     ¿Has encontrado una <b>errata o algún problema</b>?
     <a class="email-link" data-user="{{ sitio.contacto_user }}" data-domain="{{ sitio.contacto_domain }}" href="#contacto">Escríbeme por correo</a>.</p>
+    <p class="peq">Contenido bajo <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.es" target="_blank" rel="noopener">CC BY-NC 4.0</a>:
+    compártelo y adáptalo libremente sin ánimo de lucro, citando la fuente; para usos comerciales,
+    escríbeme. El código del sitio está bajo licencia MIT.</p>
     {# Botón de donaciones: pendiente de decidir el método (se añadirá más adelante). #}
     <button class="cerrar" data-close>Cerrar</button>
   </div>

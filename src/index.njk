@@ -1,0 +1,30 @@
+---
+layout: base-sitio.njk
+title: "Cuadernos de Repaso"
+---
+{% import "cursos.njk" as cursos %}
+<main class="home">
+  <div class="home-hero">
+    <p class="titulo-peq">Para repasar en verano</p>
+    <h1 class="titulo-grande">Cuadernos de Repaso</h1>
+    <p class="sub">Repasa jugando: historias reales, humor y ejercicios por curso. Elige tu cuaderno y empieza la aventura.</p>
+  </div>
+
+  <div class="cards">
+    {%- for c in cuadernos %}
+    <a class="card" href="{{ c.base }}/">
+      <img src="{{ c.portada }}" alt="Portada del cuaderno {{ c.titulo }}" loading="lazy">
+      <div class="card-body">
+        <span class="card-num">Cuaderno</span>
+        <p class="card-epoca">{{ c.titulo }}</p>
+        <p class="card-gancho">{{ c.descripcion }}</p>
+        <div class="card-cursos">{{ cursos.tags(c.cursos) }}</div>
+      </div>
+    </a>
+    {%- endfor %}
+  </div>
+
+  <div class="sitio-footer">
+    <button class="item-about" id="btnAbout">ℹ️ Acerca de Cuadernos de Repaso</button>
+  </div>
+</main>

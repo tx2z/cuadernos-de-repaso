@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title or cuaderno.titulo }}</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Lexend:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="/sistema/css/estilo.css">
+</head>
+<body>
+
+<!-- Menú flotante -->
+<button class="fab" id="fab" aria-label="Menú" title="Menú">☰</button>
+<div class="menu" id="menu">
+  {%- if tipo == "unidad" or tipo == "guia" %}
+  <h4>{{ "Unidad" if tipo == "unidad" else "Guía de padres" }}</h4>
+  {%- if tipo == "unidad" %}
+  <div class="cap">Curso</div>
+  <div class="grp" id="grpCurso">
+    <button data-curso="3">3º</button>
+    <button data-curso="4">4º</button>
+    <button data-curso="todo">Todo</button>
+  </div>
+  <a href="{{ cuaderno.base }}/guia/{{ slug }}/" class="item" data-guia="{{ cuaderno.base }}/guia/{{ slug }}/">👪 Guía de padres</a>
+  {%- elif tipo == "guia" %}
+  <a href="{{ cuaderno.base }}/unidades/{{ slug }}/" class="item">↩️ Volver a la unidad</a>
+  {%- endif %}
+  <button class="item" id="btnImprimir">🖨️ Imprimir / Guardar PDF</button>
+  {%- endif %}
+
+  <h4 class="{{ 'sep-top' if tipo == 'unidad' or tipo == 'guia' }}">Menú</h4>
+  <div class="nav-unidades">
+    <a href="{{ cuaderno.base }}/" class="{{ 'actual' if tipo == 'portada' }}">🏠 Portada del cuaderno</a>
+    {%- for u in collections.unidad %}
+    {%- if u.data.cuaderno.slug == cuaderno.slug %}
+    <a href="{{ cuaderno.base }}/unidades/{{ u.data.slug }}/" class="{{ 'actual' if u.data.slug == slug and tipo != 'portada' }}">{{ u.data.numero }}. {{ u.data.epoca }}</a>
+    {%- endif %}
+    {%- endfor %}
+    <a href="/">📚 Todos los cuadernos</a>
+  </div>
+  <button class="item" id="btnAbout">ℹ️ Acerca de</button>
+</div>
+
+<!-- Pop-up de bienvenida: elegir curso -->
+<div class="backdrop" id="welcome">
+  <div class="modal">
+    <h3>¡Hola! 👋</h3>
+    <p>¿Qué curso vas a hacer hoy?</p>
+    <div class="cursos">
+      <button data-curso="3">3º de Primaria</button>
+      <button data-curso="4">4º de Primaria</button>
+      <button data-curso="todo">Ver todo</button>
+    </div>
+  </div>
+</div>
+
+{% include "about.njk" %}
+
+<!-- Parent gate: entrada a la guía de padres -->
+<div class="backdrop" id="gate">
+  <div class="modal">
+    <h3>Guía de padres 👪</h3>
+    <p>Esta zona es para personas adultas. Responde para entrar:</p>
+    <form class="gate-form" id="gateForm">
+      <label for="gateInput"><b>¿En qué año naciste?</b></label>
+      <input type="text" id="gateInput" inputmode="numeric" maxlength="4" placeholder="Ej: 1985" autocomplete="off" aria-label="Año de nacimiento">
+      <p class="gate-error" id="gateError"></p>
+      <button type="submit">Entrar</button>
+    </form>
+  </div>
+</div>
+
+{{ content | safe }}
+
+<script src="/sistema/js/cuaderno.js"></script>
+</body>
+</html>

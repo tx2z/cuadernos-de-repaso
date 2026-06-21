@@ -1,0 +1,5 @@
+{# Pills de cursos reutilizables. Recibe una lista como ["3","4"] y pinta "3º Primaria", etc.
+   Para añadir un curso nuevo: añade su número a los datos (y, si hace falta, una clase tagN en el CSS). #}
+{% macro tags(cursos) -%}
+{%- for c in cursos %}<span class="nivel-tag tag{{ c }}">{{ c }}º Primaria</span>{% endfor -%}
+{%- endmacro %}

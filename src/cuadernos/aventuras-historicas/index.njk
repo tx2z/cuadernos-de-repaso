@@ -1,0 +1,30 @@
+---
+tipo: portada
+permalink: "{{ cuaderno.base }}/"
+title: "Aventuras Históricas — Cuaderno de repaso"
+---
+{% import "cursos.njk" as cursos %}
+<main class="home">
+  <a class="volver" href="/">↩️ Todos los cuadernos</a>
+  <div class="home-hero">
+    <p class="titulo-peq">Cuaderno de repaso de</p>
+    <h1 class="titulo-grande">Aventuras Históricas</h1>
+    <p class="sub">Un viaje por la historia con humor y casos reales, para repasar en verano o en cualquier momento.</p>
+    <div class="cursos-tags">{{ cursos.tags(cuaderno.cursos) }}</div>
+  </div>
+
+  <div class="cards">
+    {%- for u in collections.unidad %}
+    {%- if u.data.cuaderno.slug == cuaderno.slug %}
+    <a class="card" href="{{ cuaderno.base }}/unidades/{{ u.data.slug }}/">
+      <img src="{{ cuaderno.base }}/unidades/{{ u.data.slug }}/images/imagen-01-portada.png" alt="Portada de la unidad {{ u.data.numero }}: {{ u.data.epoca }}" loading="lazy">
+      <div class="card-body">
+        <span class="card-num">Unidad {{ u.data.numero }}</span>
+        <p class="card-epoca">{{ u.data.epoca }}</p>
+        <p class="card-gancho">{{ u.data.gancho }}</p>
+      </div>
+    </a>
+    {%- endif %}
+    {%- endfor %}
+  </div>
+</main>

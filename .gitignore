@@ -1,0 +1,9 @@
+# Dependencias y salida del build
+node_modules/
+_site/
+
+# Imágenes originales sin comprimir (pesadas; en el sitio van las optimizadas)
+**/originales/
+
+# Basura del sistema
+.DS_Store

@@ -1,0 +1,4 @@
+{
+  "tipo": "guia",
+  "permalink": "{{ cuaderno.base }}/guia/{{ slug }}/"
+}

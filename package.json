@@ -1,0 +1,15 @@
+{
+  "name": "cuadernos-de-repaso",
+  "version": "1.0.0",
+  "description": "Cuadernos de repaso escolar (monorepo) — sitio web (Eleventy)",
+  "type": "module",
+  "scripts": {
+    "start": "eleventy --serve",
+    "build": "eleventy",
+    "deploy": "eleventy && wrangler pages deploy _site --project-name=cuadernos-de-repaso"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "wrangler": "^3.0.0"
+  }
+}

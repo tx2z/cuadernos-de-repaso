@@ -1,0 +1,9 @@
+{
+  "layout": "base-cuaderno.njk",
+  "cuaderno": {
+    "slug": "aventuras-historicas",
+    "base": "/aventuras-historicas",
+    "titulo": "Aventuras Históricas",
+    "cursos": ["3", "4"]
+  }
+}

@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aventuras Históricas — Unidad 1: La Prehistoria</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Lexend:wght@400;500;700&display=swap">
+<style>
+/* ====== Fuente dislexia ====== */
+@font-face{
+  font-family:'OpenDyslexic';
+  src:url('https://cdn.jsdelivr.net/fontsource/fonts/opendyslexic@latest/latin-400-normal.woff2') format('woff2');
+  font-weight:400; font-display:swap;
+}
+@font-face{
+  font-family:'OpenDyslexic';
+  src:url('https://cdn.jsdelivr.net/fontsource/fonts/opendyslexic@latest/latin-700-normal.woff2') format('woff2');
+  font-weight:700; font-display:swap;
+}
+
+/* ====== Paleta del proyecto ====== */
+:root{
+  --crema:#FAF3E0;
+  --azul:#1D3557;
+  --terracota:#E76F51;
+  --salvia:#6B9080;
+  --azul3:#A8DADC;
+  --naranja4:#F4A261;
+  --tinta:#20201c;
+  --papel:#ffffff;
+  --raya:#d8c9a6;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:#e7e1d2;
+  /* Fuente del cuerpo. Para usar Lexend en su lugar, cambia 'OpenDyslexic' por 'Lexend'. */
+  font-family:'OpenDyslexic','Verdana',Arial,sans-serif;
+  color:var(--tinta);
+  line-height:1.7;
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+}
+
+/* La "hoja" de papel: ancho A4 real, con márgenes tipo página */
+.hoja{
+  background:var(--crema);
+  width:21cm;
+  max-width:100%;
+  margin:24px auto;
+  padding:1.6cm 1.8cm 2cm;
+  border-radius:6px;
+}
+
+/* Cortes de página limpios al exportar a PDF */
+table.t,.escribir,.match,.fichas,.caja,.callout,.reto,.cierre,.sopa{break-inside:avoid;}
+h1,h2,h3{break-after:avoid;}
+p{orphans:2;widows:2;}
+
+/* Tipografía */
+h1,h2,h3{font-family:'Fredoka',sans-serif;font-weight:600;line-height:1.2;}
+p{margin:.5em 0;}
+.vocab{color:var(--azul);font-weight:700;}
+
+/* ====== Menú flotante (no se imprime) ====== */
+.fab{position:fixed;bottom:18px;right:18px;z-index:50;width:54px;height:54px;border-radius:50%;background:var(--azul);color:#fff;border:3px solid var(--tinta);font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.fab:hover{background:var(--terracota);}
+.menu{position:fixed;bottom:82px;right:18px;z-index:50;width:236px;background:var(--crema);border:3px solid var(--tinta);border-radius:16px;padding:12px;display:none;}
+.menu.open{display:block;}
+.menu h4{font-family:'Fredoka';margin:2px 4px 8px;color:var(--azul);font-size:15px;}
+.menu .grp{display:flex;gap:6px;}
+.menu .grp button{flex:1;font-family:'Fredoka';font-weight:500;font-size:14px;border:2px solid var(--tinta);border-radius:10px;padding:7px 0;background:#fff;cursor:pointer;}
+.menu .grp button.on{background:var(--naranja4);}
+.menu .item{display:block;width:100%;text-align:left;font-family:'Fredoka';font-weight:500;font-size:14px;border:2px solid var(--tinta);border-radius:10px;padding:8px 10px;background:#fff;cursor:pointer;margin-top:8px;}
+.menu .item:hover{background:var(--azul3);}
+
+/* ====== Ventanas (pop-up) ====== */
+.backdrop{position:fixed;inset:0;background:rgba(20,20,18,.55);z-index:60;display:none;align-items:center;justify-content:center;padding:20px;}
+.backdrop.open{display:flex;}
+.modal{background:var(--crema);border:4px solid var(--tinta);border-radius:20px;padding:24px;max-width:420px;width:100%;text-align:center;}
+.modal h3{font-family:'Fredoka';color:var(--azul);font-size:24px;margin:0 0 6px;}
+.modal p{font-size:15px;margin:0 0 16px;}
+.modal .cursos{display:flex;flex-direction:column;gap:10px;}
+.modal .cursos button{font-family:'Fredoka';font-weight:600;font-size:18px;border:3px solid var(--tinta);border-radius:14px;padding:12px;cursor:pointer;background:#fff;}
+.modal .cursos button:hover{background:var(--naranja4);}
+.modal .cerrar{margin-top:14px;font-family:'Fredoka';border:2px solid var(--tinta);border-radius:10px;background:#fff;padding:6px 16px;cursor:pointer;}
+.modal.about{text-align:left;}
+.modal.about h3{text-align:center;}
+
+/* ====== Portada ====== */
+.portada{text-align:center;break-after:page;padding-bottom:10px;}
+.portada img.banner{width:100%;border:4px solid var(--tinta);border-radius:18px;display:block;margin:0 0 18px;}
+.titulo-peq{font-family:'Fredoka';font-size:20px;color:var(--terracota);font-weight:500;margin:0;}
+.titulo-grande{font-family:'Fredoka';font-size:52px;font-weight:700;color:var(--azul);margin:0;letter-spacing:.5px;line-height:1;}
+.unidad-pill{display:inline-block;background:var(--terracota);color:#fff;font-family:'Fredoka';font-weight:600;font-size:22px;border:4px solid var(--tinta);border-radius:16px;padding:6px 22px;margin:20px 0 10px;transform:rotate(-1.5deg);}
+.epoca{font-family:'Fredoka';font-size:30px;color:var(--azul);font-weight:600;margin:6px 0;}
+.gancho{font-size:17px;font-style:italic;color:#5c5448;max-width:560px;margin:8px auto 18px;}
+.doodles{width:62%;max-width:420px;margin:6px auto 0;display:block;}
+
+/* ====== Cabecera de sección ====== */
+.sec{margin:30px 0;position:relative;}
+.sec-cab{display:inline-flex;align-items:center;gap:12px;background:var(--azul);border:3px solid var(--tinta);border-radius:14px;padding:7px 18px 7px 14px;transform:rotate(-.7deg);break-after:avoid;}
+.sec-cab .ico{font-size:26px;line-height:1;filter:saturate(1.1);}
+.sec-cab h2{color:var(--crema);font-size:23px;margin:0;}
+/* Doodle decorativo arriba a la derecha de la sección */
+.doodle{position:absolute;top:-10px;right:-2px;width:74px;height:auto;transform:rotate(8deg);pointer-events:none;z-index:2;}
+
+/* Etiquetas de nivel */
+.nivel{margin:16px 0;}
+.nivel-tag{display:inline-block;font-family:'Fredoka';font-weight:600;font-size:16px;border:3px solid var(--tinta);border-radius:20px;padding:2px 16px;margin:6px 0 10px;}
+.tag3{background:var(--azul3);color:#10484f;}
+.tag4{background:var(--naranja4);color:#7a3c14;}
+
+/* Cajas de ejercicio */
+.caja{background:var(--papel);border:3px solid var(--tinta);border-radius:14px;padding:14px 18px;margin:12px 0;break-inside:avoid;}
+.caja h3{font-size:17px;color:var(--azul);margin:0 0 6px;}
+ol,ul{margin:.4em 0;padding-left:1.4em;}
+li{margin:.35em 0;}
+
+/* Texto de arranque con imagen */
+.lectura img.ilus{float:right;width:40%;min-width:220px;border:3px solid var(--tinta);border-radius:14px;margin:0 0 10px 16px;}
+.lectura{font-size:16.5px;}
+.lectura::after{content:"";display:block;clear:both;}
+
+/* Callouts */
+.callout{border:3px solid var(--tinta);border-radius:14px;padding:12px 16px;margin:14px 0;break-inside:avoid;}
+.callout .et{display:flex;align-items:center;gap:8px;font-family:'Fredoka';font-weight:600;font-size:15px;margin-bottom:2px;}
+.c-dato{background:#FBEDE8;}
+.c-dato .et{color:#9a4a2c;}
+.c-debate{background:#E3EEEA;}
+.c-debate .et{color:#3f5e54;}
+.c-mision{background:#EAF1FA;}
+.c-mision .et{color:var(--azul);}
+.c-tip{background:#FBF3DE;}
+.c-tip .et{color:#8a5a0b;}
+
+/* Fichas ideovisuales */
+.fichas{display:flex;gap:16px;margin:12px 0;break-inside:avoid;}
+.ficha{flex:1;background:var(--papel);border:3px solid var(--tinta);border-radius:14px;padding:10px;text-align:center;}
+.ficha:nth-child(1){transform:rotate(-1.2deg);}
+.ficha:nth-child(2){transform:rotate(1.2deg);}
+.ficha img{width:100%;max-width:160px;border-radius:8px;}
+.ficha .pal{font-family:'Fredoka';font-weight:600;font-size:20px;color:var(--azul);letter-spacing:2px;margin-top:4px;}
+
+/* Sopa de letras */
+.sopa{display:grid;grid-template-columns:repeat(11,1fr);gap:3px;max-width:430px;margin:10px 0;}
+.sopa span{aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:var(--papel);border:2px solid var(--tinta);border-radius:6px;font-family:'Fredoka';font-weight:500;font-size:16px;}
+.busca{font-family:'Fredoka';font-weight:500;color:var(--azul);}
+
+/* Tablas */
+table.t{border-collapse:collapse;width:100%;margin:8px 0;background:var(--papel);}
+table.t th,table.t td{border:2px solid var(--tinta);padding:7px 10px;text-align:left;font-size:15.5px;}
+table.t th{background:var(--azul3);font-family:'Fredoka';}
+
+/* Emparejar (dos columnas) */
+.match{display:flex;gap:24px;}
+.match ul{list-style:none;padding:0;flex:1;}
+.match li{background:var(--papel);border:2px solid var(--tinta);border-radius:10px;padding:6px 12px;margin:7px 0;}
+
+/* Líneas para escribir → marca "al cuaderno" (responden en cuaderno aparte) */
+.escribir{display:none;}
+.cuaderno{display:inline-flex;align-items:center;gap:6px;font-family:'Fredoka';font-weight:500;font-size:14px;color:var(--salvia);background:#EEF2EF;border:2px dashed var(--salvia);border-radius:20px;padding:2px 12px;margin:6px 0;}
+.hueco{display:inline-block;border-bottom:2.5px solid var(--azul);min-width:90px;}
+.minihueco{display:inline-block;border-bottom:2.5px solid var(--azul);min-width:46px;}
+
+/* Reto opcional / estrella */
+.reto{background:#FBF3DE;border:3px dashed var(--tinta);border-radius:14px;padding:12px 16px;margin:12px 0;break-inside:avoid;}
+.reto .et{font-family:'Fredoka';font-weight:600;color:#8a5a0b;}
+
+/* Mapa */
+.mapa{display:block;width:74%;margin:12px auto;border:3px solid var(--tinta);border-radius:14px;}
+
+/* Separador divertido */
+.sep{text-align:center;font-size:22px;letter-spacing:10px;color:var(--salvia);margin:24px 0;}
+
+/* Cierre */
+.cierre{text-align:center;break-inside:avoid;margin-top:30px;}
+.cierre img{width:46%;max-width:300px;border:4px solid var(--tinta);border-radius:18px;}
+.cierre .bravo{font-family:'Fredoka';font-weight:700;font-size:32px;color:var(--terracota);margin:6px 0 0;}
+
+small,.peq{font-size:13.5px;color:#6b6357;}
+
+/* ====== Impresión ====== */
+@page{size:A4;margin:1.5cm;}
+@media print{
+  body{background:#fff;}
+  .hoja{margin:0;max-width:none;border-radius:0;padding:0;}
+  .fab,.menu,.backdrop{display:none !important;}
+  a{color:inherit;text-decoration:none;}
+}
+/* ====== Filtro de curso (lo controla el menú) ====== */
+body.solo-3 .nivel-4{display:none;}
+body.solo-4 .nivel-3{display:none;}
+</style>
+</head>
+<body>
+
+<!-- Menú flotante -->
+<button class="fab" id="fab" aria-label="Menú" title="Menú">☰</button>
+<div class="menu" id="menu">
+  <h4>Curso</h4>
+  <div class="grp" id="grpCurso">
+    <button data-curso="3">3º</button>
+    <button data-curso="4">4º</button>
+    <button data-curso="todo">Todo</button>
+  </div>
+  <button class="item" id="btnImprimir">🖨️ Imprimir / Guardar PDF</button>
+  <button class="item" id="btnAbout">ℹ️ Acerca de</button>
+</div>
+
+<!-- Pop-up de bienvenida: elegir curso -->
+<div class="backdrop" id="welcome">
+  <div class="modal">
+    <h3>¡Hola! 👋</h3>
+    <p>¿Qué curso vas a hacer hoy?</p>
+    <div class="cursos">
+      <button data-curso="3">3º de Primaria</button>
+      <button data-curso="4">4º de Primaria</button>
+      <button data-curso="todo">Ver todo</button>
+    </div>
+  </div>
+</div>
+
+<!-- Pop-up Acerca de -->
+<div class="backdrop" id="about">
+  <div class="modal about">
+    <h3>Aventuras Históricas</h3>
+    <p><b>Unidad 1 · La Prehistoria</b><br>Cuaderno de repaso por épocas, con humor y casos reales de la historia.</p>
+    <p class="peq">Las respuestas se escriben en un cuaderno aparte. Puedes cambiar de curso cuando quieras desde el menú (☰).</p>
+    <button class="cerrar" data-close>Cerrar</button>
+  </div>
+</div>
+
+<div class="hoja">
+
+  <!-- ===== PORTADA ===== -->
+  <section class="portada">
+    <img class="banner" src="./images/imagen-01-portada.png" alt="Explorador de la Edad de Piedra en los Alpes con un mamut">
+    <p class="titulo-peq">Cuaderno de repaso de</p>
+    <h1 class="titulo-grande">Aventuras Históricas</h1>
+    <div class="unidad-pill">Unidad 1</div>
+    <p class="epoca">La Prehistoria</p>
+    <p class="gancho">"El asesinato más antiguo del mundo (que tardó 5.300 años en resolverse)"</p>
+  </section>
+
+  <!-- ===== TEXTO DE ARRANQUE ===== -->
+  <section class="sec lectura">
+    <div class="sec-cab"><span class="ico">📖</span><h2>El caso de Ötzi</h2></div>
+    <img class="ilus" src="./images/imagen-02-texto.png" alt="Ötzi congelado en el hielo y dos excursionistas descubriéndolo">
+    <p>En septiembre de 1991, dos excursionistas paseaban por los Alpes cuando se llevaron el susto de su vida. Asomando del hielo había… ¡un hombre! Al principio pensaron que era un montañero despistado y un poco congelado. Pero no: aquel señor llevaba muerto unos 5.300 años. Lo bautizaron Ötzi, y resultó ser una auténtica <span class="vocab">momia</span> de la Prehistoria, conservada en el <span class="vocab">hielo</span> como un polo de fresa olvidado en el congelador.</p>
+    <p>Todo el mundo pensó que Ötzi había muerto de frío. Pero décadas después, los científicos le hicieron una radiografía y descubrieron algo escalofriante: tenía una punta de <span class="vocab">flecha</span> clavada en el <span class="vocab">hombro</span>. ¡Alguien le había disparado con un <span class="vocab">arco</span> por la espalda! Así que Ötzi no se perdió en la montaña: lo asesinaron. Y nadie sabe quién fue.</p>
+    <p>Lo más alucinante es lo que llevaba encima. Este <span class="vocab">cazador</span> viajaba mejor equipado que muchos excursionistas de hoy: un hacha de <span class="vocab">cobre</span> (carísima en su época, señal de que era alguien importante), un cuchillo de piedra, ropa de piel cosida y hasta una mochila con marco de madera.</p>
+    <p>¿Y sabes qué más tenía? <span class="vocab">Tatuajes</span>. Sesenta y uno, para ser exactos. Pero no eran dibujos chulos de dragones: eran rayitas y cruces colocadas justo donde le dolían las articulaciones. Los expertos creen que eran una especie de "medicina" para el dolor. Vamos, que Ötzi se tatuaba… ¡para que no le doliera la espalda!</p>
+    <p>Por si fuera poco, analizaron lo que había comido antes de morir: carne de cabra montés y unos cereales. También descubrieron que tenía la barriga llena de parásitos, los dientes hechos un desastre y que era intolerante a la leche. Pobre Ötzi: lo perseguían, le dolía todo y encima no podía merendar un vaso de leche.</p>
+    <p>Gracias a él sabemos un montón sobre cómo vivían las personas hace miles de años. No está mal para alguien que pasó 5.300 años metido en un cubito de hielo gigante.</p>
+  </section>
+
+  <!-- ===== COMPRENSIÓN ===== -->
+  <section class="sec">
+    <div class="sec-cab"><span class="ico">🔍</span><h2>Comprensión lectora</h2></div>
+
+    <div class="nivel nivel-3">
+      <span class="nivel-tag tag3">3º Primaria</span>
+      <div class="caja">
+        <ol>
+          <li>¿En qué año encontraron a Ötzi y quiénes lo encontraron?</li>
+          <li>¿Cuánto tiempo llevaba muerto?</li>
+          <li>¿Qué tenía clavado en el hombro?</li>
+          <li>¿Qué había comido Ötzi antes de morir?</li>
+          <li>¿Qué es lo que más te ha sorprendido de Ötzi? ¿Por qué?</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="nivel nivel-4">
+      <span class="nivel-tag tag4">4º Primaria</span>
+      <div class="caja">
+        <ol>
+          <li>¿Dónde y cómo apareció Ötzi?</li>
+          <li>¿Qué descubrieron los científicos años después con una radiografía?</li>
+          <li>¿Para qué servían sus tatuajes, según los expertos?</li>
+          <li>El texto dice que su hacha de cobre era "carísima". ¿Qué nos dice eso sobre quién era Ötzi?</li>
+          <li>¿Por qué crees que Ötzi se conservó tan bien durante 5.300 años?</li>
+          <li>¿Crees que está bien estudiar el cuerpo de Ötzi, o deberían haberlo dejado en paz? Explica tu respuesta.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ORTOGRAFÍA ===== -->
+  <section class="sec">
+    <img class="doodle" src="./images/doodles/doodle-hueso.png" alt="" aria-hidden="true">
+    <div class="sec-cab"><span class="ico">✏️</span><h2>Ortografía y vocabulario</h2></div>
+
+    <p>Estas palabras llevan <span class="vocab">H muda</span>: la H no se oye, ¡pero está ahí! Las imágenes te ayudan a recordarla.</p>
+    <div class="fichas">
+      <div class="ficha"><img src="./images/imagen-04-hielo.png" alt="La letra H formada por columnas de hielo"><div class="pal">HIELO</div></div>
+      <div class="ficha"><img src="./images/imagen-05-hueso.png" alt="La letra H formada por huesos"><div class="pal">HUESO</div></div>
+    </div>
+
+    <div class="nivel nivel-3">
+      <span class="nivel-tag tag3">3º Primaria</span>
+
+      <div class="caja">
+        <h3>1. Las fichas mágicas</h3>
+        <p>Mira los dos dibujos. Copia <em>hielo</em> y <em>hueso</em> dos veces cada una y colorea la <span class="vocab">H</span>.</p>
+        <span class="cuaderno">✏️ → en tu cuaderno</span>
+        <p class="peq">Recuerda: la H no suena, ¡pero siempre va delante!</p>
+      </div>
+
+      <div class="caja">
+        <h3>2. Completa con B o V</h3>
+        <p class="peq">Ejemplo: ca__allo → ca <b>b</b> allo</p>
+        <ul>
+          <li>co<span class="minihueco"></span>re</li>
+          <li>cla<span class="minihueco"></span>ada</li>
+          <li>ca<span class="minihueco"></span>ra</li>
+          <li><span class="minihueco"></span>aso</li>
+          <li>cu<span class="minihueco"></span>ito</li>
+        </ul>
+      </div>
+
+      <div class="caja">
+        <h3>3. Une cada palabra con su significado</h3>
+        <div class="match">
+          <ul>
+            <li>momia</li><li>cazador</li><li>cobre</li><li>flecha</li>
+          </ul>
+          <ul>
+            <li>Persona que caza animales</li>
+            <li>Cuerpo conservado que no se descompone</li>
+            <li>Arma puntiaguda que se dispara con el arco</li>
+            <li>Metal con el que se hizo el hacha de Ötzi</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="nivel nivel-4">
+      <span class="nivel-tag tag4">4º Primaria</span>
+
+      <div class="caja">
+        <h3>1. Repasa las fichas</h3>
+        <p>Mira HIELO y HUESO y rodea la <span class="vocab">H</span> en cada palabra.</p>
+        <p class="peq">La H no suena, pero va delante. ¡No te olvides de ella!</p>
+      </div>
+
+      <div class="caja">
+        <h3>2. Encuentra y corrige el error</h3>
+        <p class="peq">Ejemplo: "un acha" → "un <b>hacha</b>"</p>
+        <p class="peq">⚠️ Ojo: ¡una de las frases puede estar ya bien escrita! No la cambies.</p>
+        <ul>
+          <li>"El ielo conservó su cuerpo."</li>
+          <li>"Llevaba un acha de cobre."</li>
+          <li>"Le dispararon en el ombro."</li>
+          <li>"Tenía muchos tatuajes."</li>
+        </ul>
+        <span class="cuaderno">✏️ → corrige en tu cuaderno</span>
+      </div>
+
+      <div class="caja">
+        <h3>3. Acentuación</h3>
+        <p>Clasifica en agudas, llanas y esdrújulas. <span class="peq">(Ejemplo: ár-bol → llana)</span></p>
+        <p class="busca">momia · cazador · radiografía · médico · prehistoria · cobre</p>
+        <span class="cuaderno">✏️ → haz la tabla en tu cuaderno</span>
+      </div>
+    </div>
+
+    <!-- Juego de vocabulario COMPARTIDO (fuera de los niveles: lo hacen los dos) -->
+    <div class="caja">
+      <h3>🔤 Juego de palabras (para los dos)</h3>
+      <p class="busca">Sopa de letras · busca: MOMIA · FLECHA · ARCO · HIELO · COBRE · CAZADOR</p>
+      <p class="peq">Están en horizontal, vertical y diagonal.</p>
+      <div class="sopa" id="sopa"></div>
+      <p style="margin-top:14px;"><b>Y un crucigrama</b> — adivina cada palabra por su pista:</p>
+      <ul>
+        <li>Horizontal 1 · Cuerpo conservado que no se descompone (5)</li>
+        <li>Horizontal 3 · Metal del hacha de Ötzi (5)</li>
+        <li>Vertical 2 · Arma puntiaguda que se dispara con el arco (6)</li>
+        <li>Vertical 4 · Persona que caza animales (7)</li>
+        <li>Vertical 5 · Agua congelada que conservó a Ötzi (5)</li>
+      </ul>
+      <span class="cuaderno">✏️ → en tu cuaderno</span>
+    </div>
+  </section>
+
+  <!-- ===== INVESTIGACIÓN ===== -->
+  <section class="sec">
+    <div class="sec-cab"><span class="ico">🔎</span><h2>Misión de Investigación</h2></div>
+
+    <div class="callout c-mision">
+      <div class="et">🕵️ Misión: El expediente Ötzi <span class="peq">(con un adulto al lado)</span></div>
+      <p>Los buenos detectives investigan. Tú también vas a buscar pistas… ¡en internet!</p>
+      <p><b>Tu habilidad de hoy: las palabras clave.</b> Cuando buscas algo en internet, no escribes una frase larga. Escribes solo las <span class="vocab">palabras importantes</span>.</p>
+      <p class="peq">❌ Mal: "quién era el hombre que encontraron congelado en una montaña hace mucho tiempo"<br>✅ Bien: <code>Ötzi</code> &nbsp;o&nbsp; <code>Ötzi hombre de hielo</code></p>
+    </div>
+
+    <div class="nivel nivel-3">
+      <span class="nivel-tag tag3">3º Primaria</span>
+      <div class="caja">
+        <p><b>Tu reto:</b> entra en <b>Wikipedia</b> con un adulto y busca <code>Ötzi</code>. Lee solo la introducción y encuentra <b>UN dato nuevo</b> que no esté en el texto.</p>
+        <span class="cuaderno">✏️ → apúntalo en tu cuaderno</span>
+        <p class="peq">💡 Pista: mira dónde vivía, qué edad tenía o cómo se llama el lugar donde lo encontraron.</p>
+      </div>
+    </div>
+
+    <div class="nivel nivel-4">
+      <span class="nivel-tag tag4">4º Primaria</span>
+      <div class="caja">
+        <p><b>Tu reto:</b> busca <code>Ötzi</code> en <b>Wikipedia</b> y encuentra <b>dos datos nuevos</b>. Luego <b>comprueba uno</b> en otro sitio distinto. ¿Dice lo mismo?</p>
+        <span class="cuaderno">✏️ → los dos datos en tu cuaderno</span>
+        <p class="peq">💡 Un buen investigador siempre comprueba lo que encuentra en más de un sitio.</p>
+      </div>
+    </div>
+
+    <div class="callout c-tip"><div class="et">🔗 ¡Guarda estos datos!</div>Los vas a necesitar en tu informe de detective de la siguiente sección. 🕵️</div>
+  </section>
+
+  <!-- ===== EXPRESIÓN ESCRITA ===== -->
+  <section class="sec">
+    <img class="doodle" src="./images/doodles/doodle-flecha.png" alt="" aria-hidden="true">
+    <div class="sec-cab"><span class="ico">📝</span><h2>Expresión escrita</h2></div>
+    <p><b>El caso:</b> eres un <span class="vocab">detective del tiempo</span>. Han pasado 5.300 años y te toca resolver el misterio: ¿qué le pasó a Ötzi?</p>
+    <div class="callout c-tip"><div class="et">✍️ Para empezar (continúa tú)</div><em>"Hoy he examinado el cuerpo de Ötzi. He encontrado varias pistas importantes. La primera es que tenía una flecha clavada en el hombro, así que…"</em></div>
+
+    <div class="nivel nivel-3">
+      <span class="nivel-tag tag3">3º Primaria · 5-8 líneas</span>
+      <div class="caja">
+        <p>Escribe tu informe. Responde mientras escribes:</p>
+        <ul><li>¿Qué pistas encontraste en el cuerpo de Ötzi?</li><li>¿Qué llevaba encima?</li><li>¿Quién crees que pudo atacarle?</li></ul>
+        <p class="peq">Intenta usar: <span class="vocab">flecha</span>, <span class="vocab">cazador</span>, <span class="vocab">hielo</span>.</p>
+        <span class="cuaderno">✏️ → escribe el informe en tu cuaderno</span>
+      </div>
+    </div>
+
+    <div class="nivel nivel-4">
+      <span class="nivel-tag tag4">4º Primaria · 10-15 líneas</span>
+      <div class="caja">
+        <p>Tu informe completo debe tener:</p>
+        <ul><li><b>Inicio:</b> dónde y cómo apareció el cuerpo</li><li><b>Desarrollo:</b> las pistas (¡incluye algún dato de tu investigación!)</li><li><b>Final:</b> tu conclusión — ¿quién fue y por qué?</li></ul>
+        <p class="peq">Usa conectores (primero, después, además, por eso, finalmente) y al menos 4: <span class="vocab">momia, flecha, cobre, cazador, hombro</span>.</p>
+        <span class="cuaderno">✏️ → escribe el informe en tu cuaderno</span>
+      </div>
+    </div>
+
+    <div class="callout c-debate"><div class="et">👥 Reto en equipo</div>Comparad vuestros informes. ¿Coincidís en quién atacó a Ötzi? Defended cada uno vuestra teoría con las pistas.</div>
+  </section>
+
+  <!-- ===== MATEMÁTICAS ===== -->
+  <section class="sec">
+    <img class="doodle" src="./images/doodles/doodle-mamut.png" alt="" aria-hidden="true">
+    <div class="sec-cab"><span class="ico">➗</span><h2>Matemáticas históricas</h2></div>
+
+    <div class="nivel nivel-3">
+      <span class="nivel-tag tag3">3º Primaria</span>
+      <div class="callout c-tip"><div class="et">📝 Ejemplo resuelto</div>Un cazador hace <b>6 flechas</b> al día. ¿Cuántas en <b>4 días</b>?<br>Cada día 6, durante 4 días → multiplico. &nbsp; <b>6 × 4 = 24 flechas</b> ✓</div>
+      <div class="caja">
+        <ol>
+          <li>Un cazador atrapa 3 cabras al día. ¿Cuántas cabras en 7 días?</li>
+          <li>Cuatro cazadores se reparten 24 flechas en partes iguales. ¿Cuántas a cada uno?</li>
+          <li>Una tribu tiene 8 familias y en cada una viven 6 personas. ¿Cuántas personas hay?</li>
+          <li>Ötzi llevaba 20 flechas. Disparó 5 y perdió 6 en la nieve. ¿Cuántas le quedan? <span class="peq">(¡dos pasos!)</span></li>
+        </ol>
+      </div>
+      <div class="reto"><span class="et">⭐ Reto opcional.</span> Ötzi vivió hace unos 5.300 años. ¿Cómo se escribe ese número con letras? Y si le sumas 700 años, ¿cuántos dan?</div>
+    </div>
+
+    <div class="nivel nivel-4">
+      <span class="nivel-tag tag4">4º Primaria</span>
+      <div class="callout c-tip"><div class="et">📝 Ejemplo resuelto</div>Ötzi tardó <b>12 días</b> andando <b>15 km</b> cada día. ¿Cuántos km?<br>15 km × 12 días → multiplico. &nbsp; <b>15 × 12 = 180 km</b> ✓</div>
+      <div class="caja">
+        <ol>
+          <li>Una tribu guarda 24 cestas y en cada una hay 36 bayas. ¿Cuántas bayas en total?</li>
+          <li>Reparten 250 flechas entre 12 cazadores. ¿Cuántas a cada uno y cuántas sobran?</li>
+          <li>Ötzi tenía 61 tatuajes: 15 en cada brazo y 12 en cada pierna. ¿Cuántos en el resto del cuerpo? <span class="peq">(varios pasos)</span></li>
+          <li>Una tribu recoge 18 kg de bayas al día durante 25 días. Si se comen 200 kg, ¿cuántos guardan para el invierno?</li>
+        </ol>
+      </div>
+      <div class="reto"><span class="et">⭐ Reto opcional.</span> Si una generación dura unos 25 años, ¿cuántas generaciones han pasado desde Ötzi (hace 5.300 años) hasta hoy?</div>
+    </div>
+  </section>
+
+  <!-- ===== CIENCIA Y GEOGRAFÍA ===== -->
+  <section class="sec">
+    <img class="doodle" src="./images/doodles/doodle-cubito.png" alt="" aria-hidden="true">
+    <div class="sec-cab"><span class="ico">🌍</span><h2>Ciencia y Geografía</h2></div>
+    <img class="mapa" src="./images/imagen-03-mapa.png" alt="Mapa de los Alpes en la frontera, con una X y la rosa de los vientos">
+
+    <div class="nivel nivel-3">
+      <span class="nivel-tag tag3">3º Primaria</span>
+      <div class="caja">
+        <ol>
+          <li>Mira el mapa: localiza las montañas (los <b>Alpes</b>) y la <b>X</b> que marca dónde apareció Ötzi.</li>
+          <li>¿En qué dos países de hoy están esas montañas? <span class="peq">(pista: Ötzi apareció justo en la frontera)</span></li>
+        </ol>
+      </div>
+      <div class="callout c-debate"><div class="et">🧭 ¿Por qué allí y no en otro sitio?</div>Ötzi apareció muy arriba, en una montaña helada. Si hubiera muerto en una playa calentita, habría desaparecido hace miles de años. ¿Por qué crees que el frío de la montaña ayudó a que lo encontráramos 5.300 años después?</div>
+      <div class="caja">
+        <h3>🔬 ¿Por qué el hielo conserva?</h3>
+        <p>Cuando algo se muere, normalmente se pudre. Pero el <b>frío lo para todo</b>. Por eso Ötzi se conservó: ¡5.300 años como en un congelador gigante!</p>
+        <ol><li>¿Por qué no desapareció el cuerpo de Ötzi en tantísimos años?</li><li>El hielo es agua muy fría. ¿En qué estado está: sólido, líquido o gas?</li></ol>
+      </div>
+    </div>
+
+    <div class="nivel nivel-4">
+      <span class="nivel-tag tag4">4º Primaria</span>
+      <div class="caja">
+        <ol>
+          <li>En el mapa, localiza: <b>Italia</b>, <b>Austria</b>, los <b>Alpes</b> y el <b>valle de Ötztal</b>. Ötzi apareció donde está la <b>X</b>.</li>
+          <li>Ötzi apareció en la frontera. ¿En qué dirección (N/S/E/O) tendría que andar para bajar a Italia? <span class="peq">(mira la rosa de los vientos)</span></li>
+        </ol>
+      </div>
+      <div class="callout c-debate"><div class="et">🧭 La geografía manda</div>Las montañas son una barrera natural: separan territorios y son difíciles de cruzar. Solo se podía pasar por unos pocos <b>pasos de montaña</b>.<br>a) ¿Por qué crees que Ötzi estaba justo cruzando un paso de montaña?<br>b) Si hubiera muerto en un valle caliente, ¿lo habríamos encontrado hoy? ¿Por qué?</div>
+      <div class="caja">
+        <h3>🔬 ¿Por qué el hielo conserva?</h3>
+        <p>Un cuerpo se pudre porque unas seres vivos diminutos, las <span class="vocab">bacterias</span>, lo descomponen. Pero necesitan calor: con el frío extremo se "duermen" y no actúan.</p>
+        <ol>
+          <li>¿Qué les pasa a las bacterias con el frío extremo?</li>
+          <li>El agua tiene tres estados: sólido (hielo), líquido (agua) y gas (vapor). Pon un ejemplo de cada uno en tu casa.</li>
+          <li><span class="peq">(aplica)</span> ¿Por qué metemos la comida en el congelador? ¿Qué tiene que ver con Ötzi?</li>
+        </ol>
+      </div>
+      <div class="callout c-debate"><div class="et">👥 Para debatir juntos</div>Si pudierais viajar a la época de Ötzi, ¿dónde viviríais: montaña fría, valle o junto a un río? Cada uno defiende su elección (comida, frío, peligros, agua…). ¿Quién convence a quién?</div>
+    </div>
+  </section>
+
+  <!-- ===== FINANZAS ===== -->
+  <section class="sec">
+    <img class="doodle" src="./images/doodles/doodle-lanza.png" alt="" aria-hidden="true">
+    <div class="sec-cab"><span class="ico">💰</span><h2>Finanzas</h2></div>
+    <p>El gancho es el <span class="vocab">hacha de cobre</span> de Ötzi: tan cara que demuestra que era importante. ¿Cómo se compraba algo así sin dinero?</p>
+
+    <div class="nivel nivel-3">
+      <span class="nivel-tag tag3">3º Primaria · El trueque</span>
+      <div class="caja">
+        <p>En la prehistoria <b>no había dinero</b>. Si querías algo, lo cambiabas por otra cosa. Eso es el <span class="vocab">trueque</span>.</p>
+        <p class="peq">Ejemplo: Ötzi consiguió su hacha cambiándola por pieles, comida o trabajo.</p>
+        <ol>
+          <li>Tienes 3 pieles y quieres una lanza. ¿Cuántas pieles darías por 1 lanza? <span class="peq">(tú decides y lo explicas)</span></li>
+          <li>¿Qué problema tiene el trueque si quieres una lanza… pero el de las lanzas <b>no quiere tus pieles</b>? ¿Cómo lo resolverías?</li>
+        </ol>
+        <p class="peq">💡 Por ese problema se inventó el <b>dinero</b>: algo que todos aceptan a cambio de cualquier cosa.</p>
+      </div>
+    </div>
+
+    <div class="nivel nivel-4">
+      <span class="nivel-tag tag4">4º Primaria · Oferta y demanda</span>
+      <div class="caja">
+        <p>El precio sube y baja según <b>cuántas hay</b> y <b>cuánta gente las quiere</b>: poco + muy buscado → sube; mucho + poco buscado → baja. El cobre era carísimo porque había poco y mucha gente lo quería.</p>
+        <ol>
+          <li>En un poblado de 10 personas solo 2 saben hacer flechas. Aparece un mamut y todos quieren flechas. ¿El precio sube o baja? ¿Por qué?</li>
+          <li><span class="peq">(cálculo)</span> Una piel cuesta 2 flechas, pero en invierno cuesta el triple. ¿Cuántas flechas cuesta en invierno?</li>
+          <li>Explica con tus palabras por qué el hacha de cobre era tan cara. <span class="peq">(usa "poco" y "querían")</span></li>
+        </ol>
+      </div>
+      <div class="callout c-debate"><div class="et">👥 Para debatir juntos</div>Solo queda <b>un</b> hacha de cobre y tres personas la quieren. ¿Cómo decidís quién se la queda: la cambia por más cosas, la sorteáis, la compartís…? ¿Qué es más justo?</div>
+    </div>
+  </section>
+
+  <!-- ===== ENGLISH ===== -->
+  <section class="sec">
+    <div class="sec-cab"><span class="ico">🇬🇧</span><h2>English</h2></div>
+
+    <div class="nivel nivel-3">
+      <span class="nivel-tag tag3">3º Primaria</span>
+      <div class="caja">
+        <h3>1. Vocabulary — match</h3>
+        <div class="match">
+          <ul><li>ice</li><li>hunter</li><li>frozen</li><li>arrow</li><li>bow</li><li>copper</li><li>axe</li><li>mountain</li></ul>
+          <ul><li>cazador</li><li>flecha</li><li>hielo</li><li>montaña</li><li>congelado</li><li>arco</li><li>hacha</li><li>cobre</li></ul>
+        </div>
+      </div>
+      <div class="caja">
+        <h3>2. Spelling ✍️ — the "magic e"</h3>
+        <p>They all have a <b>silent 'e'</b> at the end: i-<b>ce</b>, ca-<b>ve</b>.</p>
+        <p class="busca">ice · axe · cave · stone · bone · fire</p>
+        <p class="peq">👉 Read them. Then your adult reads them out loud and you write them on a separate sheet. No peeking!</p>
+      </div>
+      <div class="caja">
+        <h3>3. Read &amp; answer</h3>
+        <p><em>Ötzi was a hunter. He lived in the mountains more than 5,000 years ago. One day he died on a high, cold mountain. The ice kept his body frozen for a very long time.</em></p>
+        <p>a) What was Ötzi's job?</p>
+        <p>b) Why did his body stay frozen for so long?</p>
+        <span class="cuaderno">✏️ → answer in your notebook</span>
+      </div>
+      <div class="caja">
+        <h3>4. Write (3-4 sentences)</h3>
+        <p class="peq">Use: hunter, ice, mountain, copper. &nbsp; Start: "Ötzi was a hunter. He had a bow and arrows. He lived…"</p>
+        <span class="cuaderno">✏️ → in your notebook</span>
+      </div>
+    </div>
+
+    <div class="nivel nivel-4">
+      <span class="nivel-tag tag4">4º Primaria</span>
+      <div class="caja">
+        <h3>1. Vocabulary — match <span class="peq">(some are tricky!)</span></h3>
+        <div class="match">
+          <ul><li>glacier</li><li>to preserve</li><li>to discover</li><li>to melt</li><li>mummy</li><li>arrow wound</li><li>axe</li><li>evidence</li></ul>
+          <ul><li>descubrir</li><li>glaciar</li><li>momia</li><li>conservar</li><li>derretir(se)</li><li>hacha</li><li>herida de flecha</li><li>pruebas</li></ul>
+        </div>
+      </div>
+      <div class="caja">
+        <h3>2. Spelling ✍️ — silent letters &amp; tricky sounds</h3>
+        <table class="t">
+          <tr><th>Word</th><th>The trick</th></tr>
+          <tr><td>knife</td><td>the <b>K</b> is silent</td></tr>
+          <tr><td>ancient</td><td>"sh" sound written <b>ci</b></td></tr>
+          <tr><td>glacier</td><td>"sh" sound written <b>ci</b> again</td></tr>
+          <tr><td>shoulder</td><td>written <b>ou</b> (sounds like "oh")</td></tr>
+          <tr><td>mountain</td><td>ends in <b>-tain</b> (sounds like "-ten")</td></tr>
+          <tr><td>weapon</td><td><b>ea</b> sounds like a short "e"</td></tr>
+          <tr><td>mummy</td><td>final <b>y</b> sounds like "i"; double <b>m</b></td></tr>
+          <tr><td>copper</td><td>short vowel → double <b>pp</b></td></tr>
+        </table>
+        <p class="peq">👉 Learn the rules. Then your adult reads them out loud and you write them on a separate sheet.</p>
+      </div>
+      <div class="caja">
+        <h3>3. Read this fun fact</h3>
+        <p><em>Ötzi is the oldest natural mummy in Europe. Two hikers discovered him in 1991 in the Alps. A glacier had preserved his body for more than 5,000 years. Scientists found an arrow wound in his shoulder, so they think someone killed him. Thanks to Ötzi, we know a lot about life in the Stone Age.</em></p>
+      </div>
+      <div class="caja">
+        <h3>4. Answer in English</h3>
+        <p>a) When was Ötzi discovered, and by whom?</p>
+        <p>b) What preserved his body for thousands of years?</p>
+        <p>c) Scientists found an arrow wound. What does this tell us about how Ötzi probably died? <span class="peq">(think!)</span></p>
+        <span class="cuaderno">✏️ → answer in your notebook</span>
+      </div>
+      <div class="caja">
+        <h3>5. Write (5-7 sentences)</h3>
+        <p class="peq">You are a scientist studying Ötzi. Use connectors (first, then, also, finally) and at least 4: glacier, frozen, copper, arrow, mummy. Start: "Today I studied Ötzi, the famous ice mummy. First, I looked at his body…"</p>
+        <span class="cuaderno">✏️ → in your notebook</span>
+      </div>
+    </div>
+
+    <div class="callout c-debate"><div class="et">👥 Talk together</div>In English (or Spanish if it's tricky), tell each other your theory: who killed Ötzi, and why?</div>
+  </section>
+
+  <!-- ===== ZONA EXTRA ===== -->
+  <section class="sec">
+    <img class="doodle" src="./images/doodles/doodle-mano.png" alt="" aria-hidden="true">
+    <div class="sec-cab"><span class="ico">🎲</span><h2>Para los Genios de la Caverna</h2></div>
+    <p class="peq">Zona extra — opcional, ¡sin nota! Tres actividades para los que se quedan con ganas de más.</p>
+
+    <div class="caja">
+      <h3>🧪 1. Experimento: "Excava a tu propio Ötzi" <span class="peq">(con un adulto)</span></h3>
+      <p><b>Necesitas:</b> un vaso de plástico, agua, un congelador y un muñequito que se pueda mojar.</p>
+      <ol>
+        <li>Mete el muñequito en el vaso con agua. Déjalo en el congelador toda la noche.</li>
+        <li>Al día siguiente, saca el bloque de hielo. ¡Tu "Ötzi" está atrapado dentro!</li>
+        <li>Excávalo con cuidado: cuchara, agua templada (¡nunca caliente!) o un poco de sal.</li>
+        <li>Cronométrate: ¿cuánto tardas en rescatarlo?</li>
+      </ol>
+      <p class="peq">Piensa: ¿por qué con sal el hielo se derrite antes? ¿Qué pasó con el Ötzi de verdad cuando el hielo se derritió en 1991?</p>
+    </div>
+
+    <div class="caja">
+      <h3>🧩 2. Reto de lógica: ¿de quién es cada arma?</h3>
+      <p>Tres cazadores —<b>Ug, Mog y Tok</b>— tienen un <b>hacha</b>, un <b>arco</b> y una <b>lanza</b>. Con las pistas, averigua de quién es cada una:</p>
+      <ul><li>Tok caza desde lejos, disparando.</li><li>Ug no lleva la lanza.</li></ul>
+      <p>✏️ Ug tiene <span class="minihueco"></span> · Mog tiene <span class="minihueco"></span> · Tok tiene <span class="minihueco"></span></p>
+      <p class="peq">Pista: empieza por Tok.</p>
+    </div>
+
+    <div class="caja">
+      <h3>🎨 3. Crea: tu pintura rupestre</h3>
+      <p>Dibuja tu propia pintura rupestre que cuente una cacería: el animal, los cazadores, las armas… ¡pero solo con dibujos, sin palabras! (como hacían ellos).</p>
+      <span class="cuaderno">✏️ → dibújala en tu cuaderno</span>
+      <div class="callout c-debate" style="margin-top:10px;"><div class="et">👥 Y luego…</div>Enseñaos los dibujos y a ver si adivináis la historia del otro solo mirándola.</div>
+    </div>
+  </section>
+
+  <!-- ===== CIERRE ===== -->
+  <div class="cierre">
+    <img src="./images/imagen-06-cierre.png" alt="Cavernícola celebrando">
+    <p class="bravo">¡Bien hecho!</p>
+    <p class="peq">Has resuelto el caso más antiguo de la historia. Nos vemos en la Unidad 2.</p>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  // Sopa de letras
+  var grid="PMAICAZADOR EGMRDCODNNI BRUDCOCULNZ GCFBHOLCHHD OILRNFNNIGI CFEUHFROEIU HMCBHBMOLIC GZHMGSOROEI EHACOBREUUI ZPZONHMOMIA ETSCBDEFPCO".replace(/ /g,"");
+  var s=document.getElementById('sopa');
+  if(s){for(var i=0;i<grid.length;i++){var c=document.createElement('span');c.textContent=grid[i];s.appendChild(c);}}
+})();
+
+(function(){
+  // Selector de curso + menú
+  var KEY='curso-cuaderno-aventuras';
+  var memoria=null; // memoria por sesión (mientras la pestaña esté abierta)
+  var body=document.body;
+  function aplica(c){
+    body.classList.remove('solo-3','solo-4');
+    if(c==='3') body.classList.add('solo-3');
+    else if(c==='4') body.classList.add('solo-4');
+    document.querySelectorAll('#grpCurso button').forEach(function(b){
+      b.classList.toggle('on', b.dataset.curso===c);
+    });
+  }
+  // Guarda en memoria de sesión. (El día que se sirva desde web, cambiar por localStorage para recordar entre sesiones.)
+  function guarda(c){ memoria=c; }
+  function lee(){ return memoria; }
+
+  // Al abrir: si hay memoria, aplica; si no, muestra el pop-up de curso
+  var guardado=lee();
+  if(guardado){ aplica(guardado); }
+  else { document.getElementById('welcome').classList.add('open'); }
+
+  // Botones del pop-up de bienvenida
+  document.querySelectorAll('#welcome button[data-curso]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var c=b.dataset.curso; aplica(c); guarda(c);
+      document.getElementById('welcome').classList.remove('open');
+    });
+  });
+
+  // Abrir/cerrar menú
+  var menu=document.getElementById('menu');
+  document.getElementById('fab').addEventListener('click', function(e){ e.stopPropagation(); menu.classList.toggle('open'); });
+  document.addEventListener('click', function(e){ if(menu.classList.contains('open') && !menu.contains(e.target) && e.target.id!=='fab') menu.classList.remove('open'); });
+
+  // Cambiar curso desde el menú
+  document.querySelectorAll('#grpCurso button').forEach(function(b){
+    b.addEventListener('click', function(){ var c=b.dataset.curso; aplica(c); guarda(c); });
+  });
+
+  // Imprimir y Acerca de
+  document.getElementById('btnImprimir').addEventListener('click', function(){ menu.classList.remove('open'); window.print(); });
+  document.getElementById('btnAbout').addEventListener('click', function(){ menu.classList.remove('open'); document.getElementById('about').classList.add('open'); });
+  document.querySelectorAll('[data-close]').forEach(function(b){ b.addEventListener('click', function(){ b.closest('.backdrop').classList.remove('open'); }); });
+  // Cerrar "Acerca de" tocando fuera (el de bienvenida obliga a elegir)
+  document.getElementById('about').addEventListener('click', function(e){ if(e.target.id==='about') this.classList.remove('open'); });
+})();
+</script>
+</body>
+</html>
